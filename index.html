@@ -1014,6 +1014,70 @@ body.splash-active{overflow:hidden}
   <div class="pagination"><span id="pInfo">Showing 1–15 of 301 engineers</span><div class="page-btns" id="pBtns"><button class="pbtn">← Prev</button><button class="pbtn active">1</button><button class="pbtn">2</button><button class="pbtn">3</button><button class="pbtn">Next →</button></div></div>
 </div>
 
+<!-- ═══════════ CAREER PROGRESSION REGISTER (cpr-career-row-feature; added 16-Nov-2026, non-destructive; remove this block + matching script to revert) ═══════════ -->
+<div class="sec-hdr" data-feature="cpr-career-row-feature"><h2>🧭 Career Progression Register — One Row per Engineer</h2><div class="sec-line"></div></div>
+<style data-feature="cpr-career-row-feature">
+#cprWrap{background:var(--surface,#0f1a2b);border:1px solid var(--border,rgba(255,255,255,.08));border-radius:var(--radius,14px);padding:16px;margin-bottom:22px}
+#cprWrap .cpr-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}
+#cprWrap .cpr-ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+#cprWrap .cpr-in,#cprWrap .cpr-sel{background:var(--bg2,#0b1422);color:var(--text,#e8f0ff);border:1px solid var(--border,rgba(255,255,255,.12));border-radius:8px;padding:7px 10px;font-size:12px;font-family:inherit}
+#cprWrap .cpr-in{min-width:220px}
+#cprWrap .cpr-btn{background:rgba(0,212,200,.12);color:var(--teal,#00d4c8);border:1px solid rgba(0,212,200,.4);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;cursor:pointer}
+#cprWrap .cpr-btn:hover{background:rgba(0,212,200,.22)}
+#cprWrap .cpr-note{font-size:11px;color:var(--text3,#7f8ea8);margin-bottom:10px;line-height:1.5}
+#cprWrap .cpr-scroll{max-height:620px;overflow:auto;border:1px solid var(--border,rgba(255,255,255,.08));border-radius:10px}
+#cprWrap table{width:100%;border-collapse:collapse;font-size:12px}
+#cprWrap thead th{position:sticky;top:0;z-index:2;background:var(--bg2,#0b1422);color:var(--text2,#b7c4dc);text-align:left;padding:9px 10px;font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;border-bottom:1px solid var(--border,rgba(255,255,255,.1));cursor:pointer;white-space:nowrap}
+#cprWrap tbody td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.05);color:var(--text2,#b7c4dc);vertical-align:middle}
+#cprWrap tbody tr:hover td{background:rgba(0,212,200,.05)}
+#cprWrap .cpr-mono{font-family:'JetBrains Mono',monospace}
+#cprWrap .cpr-eid{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--teal,#00d4c8);cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+#cprWrap .cpr-nm{font-weight:600;color:var(--text,#e8f0ff)}
+#cprWrap .cpr-tag{display:inline-block;padding:2px 8px;border-radius:999px;font-size:10.5px;font-weight:700;white-space:nowrap}
+#cprWrap .cpr-ror{background:rgba(79,163,255,.15);color:#4fa3ff;border:1px solid rgba(79,163,255,.4)}
+#cprWrap .cpr-mer{background:rgba(34,212,110,.13);color:#22d46e;border:1px solid rgba(34,212,110,.4)}
+#cprWrap .cpr-na{color:var(--text3,#7f8ea8);font-style:italic;font-size:11px}
+#cprWrap .cpr-due{color:#ffd166;font-weight:700}
+#cprWrap .cpr-path{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:11px}
+#cprWrap .cpr-step{padding:2px 7px;border-radius:6px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);white-space:nowrap}
+#cprWrap .cpr-arr{color:var(--text3,#7f8ea8)}
+#cprWrap .cpr-ret{color:#ff6b6b;font-weight:700;white-space:nowrap}
+#cprWrap .cpr-retd{color:var(--text3,#7f8ea8)}
+#cprWrap .cpr-foot{margin-top:8px;font-size:11px;color:var(--text3,#7f8ea8)}
+@media print{#cprWrap .cpr-scroll{max-height:none;overflow:visible}}
+</style>
+<div id="cprWrap" data-feature="cpr-career-row-feature">
+  <div class="cpr-bar">
+    <div class="cpr-ctl">
+      <input class="cpr-in" id="cprQ" type="text" placeholder="🔍 Search Emp ID or Name…" autocomplete="off">
+      <select class="cpr-sel" id="cprCad"><option value="ALL">All Present Cadres</option><option>CGM</option><option>GM</option><option>EE</option><option>Dy.EE</option></select>
+      <select class="cpr-sel" id="cprBasis"><option value="ALL">All Promotion Bases</option><option value="ROR">RoR only</option><option value="MERIT">Normal Merit only</option><option value="NONE">No further promotion</option></select>
+    </div>
+    <div class="cpr-ctl">
+      <button class="cpr-btn" id="cprCsv" type="button">⬇ Export to Excel (CSV)</button>
+    </div>
+  </div>
+  <div class="cpr-note">Each row shows: Emp ID · Name · Present Cadre · Next Cadre Date · Next Promotion Cadre · Basis (<b style="color:#4fa3ff">RoR</b> = roster/reservation slot, <b style="color:#22d46e">Normal Merit</b> = seniority turn) · full career path up to the Date of Superannuation. Projections come from the same Promotion Forecast Engine above (cadre strength, SC 15% / ST 6% / PH 3% roster) and follow the 60/62 retirement-age setting. Click an Emp ID to open the detailed forecast.</div>
+  <div class="cpr-scroll">
+    <table id="cprTable">
+      <thead><tr>
+        <th data-k="sl">Sl ↕</th>
+        <th data-k="eid">Emp ID ↕</th>
+        <th data-k="name">Name ↕</th>
+        <th data-k="cadreRank">Present Cadre ↕</th>
+        <th data-k="nextKey">Next Cadre Date ↕</th>
+        <th data-k="nextCadre">Next Promotion Cadre ↕</th>
+        <th data-k="basis">RoR / Normal Merit ↕</th>
+        <th data-k="retKey">Date of Superannuation ↕</th>
+        <th>Career Path till Superannuation</th>
+      </tr></thead>
+      <tbody id="cprBody"><tr><td colspan="9" class="cpr-na">Loading…</td></tr></tbody>
+    </table>
+  </div>
+  <div class="cpr-foot" id="cprFoot"></div>
+</div>
+<!-- ═══════════ /CAREER PROGRESSION REGISTER ═══════════ -->
+
 <!-- ═══════════ RETIREMENT & VACANCY FORECAST (added, non-destructive; remove this block + matching script to revert) ═══════════ -->
 <div class="sec-hdr" data-feature="fc-forecast-feature"><h2>📉 Retirement &amp; Vacancy Forecast</h2><div class="sec-line"></div></div>
 <style>
@@ -2836,6 +2900,106 @@ if(!html){ html = '<div class="ai-empty">No matches. Try: "next 8 EEs after June
     }catch(_e){ if(window.console) console.warn("Voice setup skipped:", _e); }
   }
   if(document.readyState === "loading"){ document.addEventListener("DOMContentLoaded", bind); } else { bind(); }
+})();
+</script>
+
+<script data-feature="cpr-career-row-feature">
+/* ═══ Career Progression Register controller — cpr-career-row-feature (isolated IIFE; reads RAW + findAllPromos; changes no data) ═══ */
+(function(){
+  try{
+    if(typeof RAW==="undefined"||!RAW||typeof findAllPromos!=="function") return;
+    var MS=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var RANK={'CGM':1,'GM':2,'EE':3,'Dy.EE':4};
+    var sortK='sl', sortD=1, rows=[];
+    function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+    function fmtD(d){ if(!d) return ''; var dd=d.getDate(); return (dd<10?'0':'')+dd+'-'+MS[d.getMonth()]+'-'+d.getFullYear(); }
+    function supDate(per){
+      try{ var s=window.getSuperannInfo?window.getSuperannInfo(per):null; if(s&&s.retireDate) return s.retireDate; }catch(_e){}
+      if(!per.retire_year) return null;
+      var mi=(typeof MN!=='undefined'&&per.month&&MN[per.month])?MN[per.month]-1:5;
+      return new Date(per.retire_year, mi+1, 0);
+    }
+    function basisOf(p){ return (p.promoType&&p.promoType.type==='roster')?'ROR':'MERIT'; }
+    function basisLbl(p){ if(basisOf(p)==='ROR'){ var m=/\(([^)]+)\)/.exec(p.promoType.label||''); return 'RoR'+(m?' ('+m[1]+')':''); } return 'Normal Merit'; }
+    function build(){
+      var now=new Date(), nowKey=now.getFullYear()*100+(now.getMonth()+1);
+      rows=RAW.map(function(per){
+        var promos=[]; try{ promos=findAllPromos(per)||[]; }catch(_e){}
+        var sd=supDate(per);
+        var r={per:per, sl:per.sl||0, eid:String(per.eid||''), name:per.name||'', cadre:per.cadre||'', cadreRank:RANK[per.cadre]||9,
+               promos:promos, sup:sd, retKey:sd?sd.getTime():9e15, nextKey:9e15, nextCadre:'', basis:'NONE', nextTxt:'', due:false};
+        if(promos.length){
+          var n=promos[0]; r.nextKey=n.year*100+n.month; r.nextCadre=n.cadre; r.basis=basisOf(n);
+          r.due = r.nextKey<=nowKey;
+          r.nextTxt = MS[n.month-1]+'-'+n.year;
+        }
+        return r;
+      });
+    }
+    function render(){
+      var q=(document.getElementById('cprQ').value||'').trim().toLowerCase();
+      var cf=document.getElementById('cprCad').value, bf=document.getElementById('cprBasis').value;
+      var d=rows.filter(function(r){
+        if(cf!=='ALL'&&r.cadre!==cf) return false;
+        if(bf!=='ALL'&&r.basis!==bf) return false;
+        if(q&&r.eid.indexOf(q)<0&&r.name.toLowerCase().indexOf(q)<0) return false;
+        return true;
+      });
+      d.sort(function(a,b){var av=a[sortK],bv=b[sortK]; if(typeof av==='number'&&typeof bv==='number') return (av-bv)*sortD; return String(av).localeCompare(String(bv),undefined,{numeric:true})*sortD;});
+      var today=new Date();
+      var h=d.map(function(r){
+        var per=r.per, n=r.promos[0];
+        var nextDate, nextCad, basis;
+        if(n){
+          nextDate = r.due ? '<span class="cpr-due" title="Vacancy already available — due now">'+esc(r.nextTxt)+' • due</span>' : '<span class="cpr-mono">'+esc(r.nextTxt)+'</span>';
+          nextCad = (typeof badgeHtml==='function')?badgeHtml(n.cadre):esc(n.cadre);
+          basis = '<span class="cpr-tag '+(r.basis==='ROR'?'cpr-ror':'cpr-mer')+'">'+esc(basisLbl(n))+'</span>';
+        } else {
+          var why = per.cadre==='CGM' ? 'Top cadre' : (!per.retire_year ? 'DOB not on record' : 'No promotion before superannuation');
+          nextDate='<span class="cpr-na">—</span>'; nextCad='<span class="cpr-na">'+why+'</span>'; basis='<span class="cpr-na">—</span>';
+        }
+        var path='<div class="cpr-path"><span class="cpr-step">'+esc(per.cadre)+'</span>';
+        r.promos.forEach(function(p){ path+='<span class="cpr-arr">→</span><span class="cpr-step">'+esc(p.cadre)+' · '+MS[p.month-1]+'-'+p.year+' · '+(basisOf(p)==='ROR'?'<b style="color:#4fa3ff">'+esc(basisLbl(p))+'</b>':'<b style="color:#22d46e">Merit</b>')+'</span>'; });
+        if(r.sup){ path+='<span class="cpr-arr">→</span><span class="cpr-ret">🏁 Retires '+MS[r.sup.getMonth()]+'-'+r.sup.getFullYear()+'</span>'; }
+        path+='</div>';
+        var sup = r.sup ? '<span class="cpr-mono '+(r.sup<=today?'cpr-retd':'cpr-ret')+'">'+fmtD(r.sup)+(r.sup<=today?' (retired)':'')+'</span>' : '<span class="cpr-na">DOB not on record</span>';
+        return '<tr><td class="cpr-mono">'+esc(r.sl)+'</td><td><span class="cpr-eid" data-eid="'+esc(r.eid)+'" title="Open detailed forecast">'+esc(r.eid)+'</span></td><td class="cpr-nm">'+esc(r.name)+'</td><td>'+((typeof badgeHtml==='function')?badgeHtml(per.cadre):esc(per.cadre))+'</td><td>'+nextDate+'</td><td>'+nextCad+'</td><td>'+basis+'</td><td>'+sup+'</td><td>'+path+'</td></tr>';
+      }).join('');
+      document.getElementById('cprBody').innerHTML = h || '<tr><td colspan="9" class="cpr-na">No engineers match the filter.</td></tr>';
+      var nR=d.filter(function(r){return r.basis==='ROR';}).length, nM=d.filter(function(r){return r.basis==='MERIT';}).length;
+      document.getElementById('cprFoot').textContent='Showing '+d.length+' of '+rows.length+' engineers · Next promotion by RoR: '+nR+' · by Normal Merit: '+nM+' · No further promotion: '+(d.length-nR-nM)+' · Retirement age setting: '+(window.RETIRE_AGE||'—')+' yrs';
+      window._cprVisible=d;
+    }
+    function refresh(){ try{ if(typeof _timeline!=='undefined') {/* engine caches itself; age toggle clears it */} build(); render(); }catch(e){ if(window.console) console.warn('CPR render failed',e); } }
+    function csv(){
+      var d=window._cprVisible||[];
+      var out=[['Sl','Emp ID','Name','Present Cadre','Next Cadre Date','Next Promotion Cadre','RoR / Normal Merit','Date of Superannuation','Career Path till Superannuation']];
+      d.forEach(function(r){
+        var n=r.promos[0];
+        var path=[r.cadre].concat(r.promos.map(function(p){return p.cadre+' ('+MS[p.month-1]+'-'+p.year+', '+basisLbl(p)+')';})).join(' -> ')+(r.sup?' -> Retires '+fmtD(r.sup):'');
+        out.push([r.sl,r.eid,r.name,r.cadre,n?r.nextTxt:'',n?n.cadre:(r.cadre==='CGM'?'Top cadre':(!r.per.retire_year?'DOB not on record':'No promotion before superannuation')),n?basisLbl(n):'',r.sup?fmtD(r.sup):'',path]);
+      });
+      var s='﻿'+out.map(function(row){return row.map(function(v){v=String(v==null?'':v); return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;}).join(',');}).join('\r\n');
+      var a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([s],{type:'text/csv;charset=utf-8'}));
+      a.download='Career_Progression_Register.csv'; document.body.appendChild(a); a.click(); setTimeout(function(){URL.revokeObjectURL(a.href); a.remove();},500);
+    }
+    function bind(){
+      ['cprQ'].forEach(function(id){document.getElementById(id).addEventListener('input',render);});
+      ['cprCad','cprBasis'].forEach(function(id){document.getElementById(id).addEventListener('change',render);});
+      document.getElementById('cprCsv').addEventListener('click',csv);
+      document.querySelectorAll('#cprTable thead th[data-k]').forEach(function(th){ th.addEventListener('click',function(){ var k=th.getAttribute('data-k'); if(sortK===k) sortD*=-1; else {sortK=k; sortD=1;} render(); }); });
+      document.getElementById('cprBody').addEventListener('click',function(e){
+        var t=e.target.closest&&e.target.closest('.cpr-eid'); if(!t) return;
+        var eid=t.getAttribute('data-eid');
+        if(typeof clickForecast==='function') clickForecast(eid);
+        else { var pe=document.getElementById('pE'); if(pe){pe.value=eid; if(typeof runP==='function') runP(); pe.scrollIntoView({behavior:'smooth',block:'center'});} }
+      });
+      // follow the 60/62 retirement-age toggle
+      document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('.ra-btn')) setTimeout(refresh,60); });
+      refresh();
+    }
+    if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',function(){setTimeout(bind,0);}); else setTimeout(bind,0);
+  }catch(e){ if(window.console) console.warn('CPR feature skipped',e); }
 })();
 </script>
 
